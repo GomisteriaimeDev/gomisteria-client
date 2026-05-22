@@ -1,0 +1,33 @@
+.addToWishlistBtn {
+  width: 15%;
+  aspect-ratio: 1/1;
+  border-radius: 5px;
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+  &:hover {
+    svg {
+      fill: #1e8ca5;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .addToWishlistBtn {
+    width: 19.5%;
+    aspect-ratio: 1/1;
+    border-radius: 5px;
+    align-self: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+    &:hover {
+      svg {
+        fill: #1e8ca5;
+      }
+    }
+  }
+}

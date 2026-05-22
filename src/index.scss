@@ -1,0 +1,241 @@
+:root {
+  --Secondary: #1e8ca5;
+  --SecondaryHover: #1b7e94;
+  --White: #fff;
+  --WhiteHover: #e5e5e5;
+  --Primary: #1b2443;
+  --Text-Color: #7b7b7b;
+  --Error: red;
+  --Red: #f7685b;
+  --RedHover: #c45045;
+}
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba($color: #020f15, $alpha: 0.7);
+  border-radius: 10px;
+}
+@font-face {
+  font-family: "Chillax";
+  src: url("../src/assets/fonts/Chillax-Regular.otf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Chillax";
+}
+
+body {
+  background: #fff;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 10px 0;
+  color: var(--Primary);
+
+  &.bold {
+    font-weight: bold;
+  }
+}
+
+h1 {
+  font-size: 40px;
+  line-height: 46px;
+}
+
+h2 {
+  font-size: 32px;
+  line-height: 42px;
+}
+
+h3 {
+  font-size: 24px;
+  line-height: 24px;
+}
+
+h4 {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+h5 {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+h6 {
+  font-size: 1em;
+}
+
+p {
+  color: var(--Text-Color);
+  font-family: Chillax;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+.error-text {
+  color: var(--Error);
+}
+.error-message--global {
+  margin: 12px 0;
+  padding: 10px 12px;
+  background-color: #fdecea;
+  color: #b00020;
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+
+  position: relative;
+  z-index: 9999;
+  width: 100%;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+
+  &.green {
+    background-color: #2ed47a;
+  }
+  &.red {
+    background-color: #f7685b;
+  }
+  &.lightBlue {
+    background-color: #1e8ca5;
+  }
+  &.yellow {
+    background-color: #ffb946;
+  }
+
+  &.orange {
+    background-color: #ff6b35;
+  }
+  &.unknown {
+    background-color: gray;
+  }
+}
+.paginationSection {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.single-more-products {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+  .single-more-products-actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .single-more-products-list {
+    width: 100%;
+    display: inline-flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    gap: 30px;
+  }
+}
+.error-message {
+  color: var(--Error);
+  margin-top: 10px;
+  text-align: center;
+}
+
+input[type="text"][pattern="[0-9]*"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type="text"][pattern="[0-9]*"]::-webkit-outer-spin-button,
+input[type="text"][pattern="[0-9]*"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 33px;
+    line-height: 38px;
+  }
+
+  h2 {
+    font-size: 28px;
+    line-height: 34px;
+  }
+
+  h3 {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  h4 {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  h5 {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  h6 {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  p {
+    color: var(--Text-Color);
+    font-family: Chillax;
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+.product-left {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+}
+@media screen and (max-width: 768px) {
+  .product-left {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+  }
+}
+
+.languageToggle-auth {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  border: 0;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 28px;
+    border-radius: 3px;
+  }
+}

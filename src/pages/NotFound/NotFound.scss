@@ -1,0 +1,57 @@
+// src/pages/NotFound/NotFound.scss
+
+.notFound-wrapper {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  svg {
+    width: 72px;
+    height: 72px;
+  }
+  h1 {
+    color: var(--Text-Color);
+    text-align: center;
+  }
+}
+
+.not-found p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+@media screen and (max-width: 768px) {
+  // src/pages/NotFound/NotFound.scss
+
+  .notFound-wrapper {
+    padding: 20px;
+  }
+  .not-found {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+    svg {
+      width: 72px;
+      height: 72px;
+    }
+    h1 {
+      color: var(--Text-Color);
+      text-align: center;
+    }
+  }
+
+  .not-found p {
+    font-size: 1.2rem;
+    color: #666;
+  }
+}

@@ -1,0 +1,181 @@
+.blueButtonComponentAddToCart {
+  display: flex;
+  width: 100%;
+  padding: 14px 0px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 5px;
+  border: 1px solid var(--Secondary);
+  background: var(--Secondary);
+  color: #fff;
+  font-family: Chillax;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  transition: ease-in-out 0.3s;
+  cursor: pointer;
+  &:hover {
+    transition: ease-in-out 0.3s;
+
+    border: 1px solid var(--SecondaryHover);
+    background: var(--SecondaryHover);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .blueButtonComponentAddToCart {
+    display: flex;
+    width: 100%;
+    padding: 10px 0px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 5px;
+    border: 1px solid var(--Secondary);
+    background: var(--Secondary);
+    color: var(--White);
+    font-family: Chillax;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 15px; /* 133.333% */
+    transition: ease-in-out 0.1s;
+    cursor: pointer;
+    &:hover {
+      transition: ease-in-out 0.3s;
+
+      border: 1px solid var(--SecondaryHover);
+      background: var(--SecondaryHover);
+    }
+  }
+}
+
+.atcModalOverlay {
+  position: fixed;
+  inset: 0;               // covers whole screen
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999998;        // no need for insane numbers
+  display: flex;
+  align-items: center;    // vertical center
+  justify-content: center; // horizontal center
+  background: rgba(0, 0, 0, 0.45);
+  padding: 16px;          // prevents touching edges on mobile
+}
+
+.atcOverlayClickCatcher {
+  display: none;
+}
+.atcModal {
+  position: relative;     // IMPORTANT: not absolute
+  width: min(420px, 92vw);
+  max-height: 90vh;       // avoids overflow on small screens
+  overflow: auto;
+  background: #fff;
+  border: 2px solid #0aa3c2;
+  border-radius: 14px;
+  padding: 18px 18px 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+}
+
+.atcClose {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.atcHeader {
+  padding-right: 28px;
+  margin-bottom: 14px;
+}
+
+.atcTitle {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.atcSubtitle {
+  margin-top: 4px;
+  color: #2b2b2b;
+  font-size: 14px;
+}
+
+.atcBody {
+  display: flex;
+  gap: 14px;
+  align-items: start;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.atcImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #e6e6e6;
+}
+
+.atcImgPlaceholder {
+  width: 74px;
+  height: 74px;
+  border-radius: 10px;
+  background: #f2f2f2;
+  border: 1px solid #e6e6e6;
+}
+
+.atcInfo {
+  flex: 1;
+}
+
+.atcName {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.atcMetaRow {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.atcMetaLabel {
+  color: #555;
+}
+
+.atcMetaValue {
+  font-weight: 600;
+}
+
+.atcFooter {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.atcBtn {
+  flex: 1;
+  height: 38px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.atcBtnSecondary {
+  background: #fff;
+  border: 1px solid #0aa3c2;
+  color: #0aa3c2;
+}
+
+.atcBtnPrimary {
+  background: #0aa3c2;
+  border: 1px solid #0aa3c2;
+  color: #fff;
+}

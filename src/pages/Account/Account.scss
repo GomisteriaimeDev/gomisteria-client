@@ -1,0 +1,175 @@
+.account-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  @media screen and (max-width: 768px) {
+    flex-direction: column !important;
+  }
+}
+
+.account-information {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 60px 40px;
+  gap: 30px;
+  width: 100%;
+  margin-left: 367px;
+  @media screen and (max-width: 768px) {
+    margin-left: 0px;
+  }
+}
+
+.account-details-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  width: 50%;
+  .account-main {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-direction: row;
+    .account-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 80px;
+    }
+  }
+  .account-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 15px;
+  }
+}
+
+.qr {
+  width: 100px;
+  height: 100px;
+}
+
+.account-update-form {
+  display: flex;
+  flex-direction: row !important;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  margin-left: 20px;
+  @media screen and (max-width: 768px) {
+    margin-left: 0px;
+    width: 100% !important;
+  }
+  .account-form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100% !important;
+  }
+}
+
+.account-update-buttons {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  align-self: stretch;
+  width: 100% !important;
+}
+
+@media screen and (max-width: 768px) {
+  .account-wrapper {
+    display: flex;
+    flex-direction: column;
+    @media screen and (max-width: 768px) {
+      width: 100% !important;
+    }
+  }
+
+  .account-information {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 30px;
+    @media screen and (max-width: 768px) {
+      width: 100% !important;
+    }
+    background: #fff;
+    padding-bottom: 40px;
+  }
+
+  .account-details-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+    width: 100%;
+    .account-main {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      width: 100%;
+      flex-direction: row;
+      flex-wrap: wrap;
+      .account-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 80px;
+      }
+    }
+    .account-details {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+  }
+
+  .qr {
+    width: 100px;
+    height: 100px;
+  }
+
+  .account-update-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100% !important;
+    flex-grow: 1;
+    .account-form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      width: 100% !important;
+      flex-grow: 1;
+    }
+  }
+
+  .account-update-buttons {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    flex-grow: 1;
+  }
+}
+
+.business-selections-account {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  flex-grow: 1;
+  .selection {
+    width: 100%;
+  }
+}

@@ -1,0 +1,589 @@
+.singleSales {
+  margin: -36px 24px;
+  border-radius: 5px;
+  background: #fff;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-height: calc(100vh - 120px);
+  margin-left: 367px;
+  @media screen and (max-width: 768px) {
+    margin-left: 0px;
+  }
+}
+.boxaaaa {
+  width: 111px;
+  height: 111px;
+  flex-shrink: 0;
+  background: #000;
+  margin-top: 68px;
+}
+.saleInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 70px;
+}
+.saleInfoSection {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+.salesWrapper {
+  margin-top: 30px;
+}
+.saleDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.saleInfoDetails {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  row-gap: 24px;
+  gap: 24px;
+  justify-content: space-between;
+  .saleInfoDetailsItem {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1 0 100%;
+    max-width: 70%;
+    select {
+      padding: 10px 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 6px;
+      background: #f5f6f8;
+      border: none;
+    }
+    span {
+      color: var(--Primary, #1b2443);
+      font-family: Chillax;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 16px; /* 114.286% */
+    }
+  }
+}
+
+.saleInfoHeader {
+  display: flex;
+  gap: 24px;
+  justify-content: flex-start;
+  align-items: center;
+  .orderNumberInfo {
+    color: #474d66;
+    font-family: Chillax;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 100% */
+    span {
+      color: var(--Secondary, #1e8ca5);
+    }
+  }
+  .orderStatusInfo {
+    color: #474d66;
+    font-family: Chillax;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 100% */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.qrCode {
+  width: 160px;
+  height: 160px;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.modalContent {
+  background: white;
+  padding: 30px;
+  border-radius: 5px;
+  position: relative;
+  width: 30%;
+  height: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.saleInfoDetailsItemButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.order-item-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.order-item-img {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+$shine-width: 50px;
+$circle-size: 20px;
+
+@keyframes shine {
+  0% {
+    left: -($circle-size / 2 + $shine-width);
+  }
+  100% {
+    left: 3 / 2 * $circle-size;
+  }
+}
+
+.status-steps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  position: relative;
+  width: 100%;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+
+.circle {
+  width: $circle-size;
+  height: $circle-size;
+  border-radius: 50%;
+  background-color: lightgray;
+  z-index: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.circle::before {
+  content: "";
+  transform: skewX(-45deg);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1) 0px,
+    rgba(255, 255, 255, 0.2) $shine-width / 5,
+    rgba(255, 255, 255, 0.1) $shine-width
+  );
+  position: absolute;
+  background-repeat: repeat-x;
+  left: -($circle-size / 2 + $shine-width);
+  width: $shine-width;
+  height: 100%;
+  animation: shine 2s infinite;
+}
+
+.circle-check {
+  width: $circle-size;
+  height: $circle-size;
+  border-radius: 50%;
+  background-color: var(--Secondary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  z-index: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.circle-check::before {
+  content: "";
+  transform: skewX(-45deg);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1) 0px,
+    rgba(255, 255, 255, 0.2) $shine-width / 5,
+    rgba(255, 255, 255, 0.1) $shine-width
+  );
+  position: absolute;
+  background-repeat: repeat-x;
+  left: -($circle-size / 2 + $shine-width);
+  width: $shine-width;
+  height: 100%;
+  animation: shine 2s infinite;
+}
+
+.step.completed .circle,
+.step.active .circle {
+  background-color: var(--Secondary);
+}
+
+.step.inactive .circle,
+.step.inactive .circle-check {
+  background-color: lightgray;
+}
+
+.label {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.step::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  width: 100%;
+  right: 50%;
+  height: 10px;
+  z-index: 0;
+  background-color: lightgray;
+}
+
+.step::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  width: 50%;
+  height: 10px;
+  background-color: lightgray;
+  z-index: 1;
+}
+
+.step.completed::before,
+.step.completed::after,
+.step.active::after {
+  background-color: var(--Secondary) !important;
+}
+
+.status-steps .step:first-child::before {
+  display: none;
+}
+
+.status-steps .step:last-child::after {
+  display: none;
+}
+
+.step.active::before {
+  background-color: var(--Secondary) !important;
+}
+
+.step.inactive::before {
+  background-color: lightgray !important;
+}
+@media screen and (max-width: 768px) {
+  .singleSales {
+    margin: -36px 0px;
+    border-radius: 5px;
+    background: #fff;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+  }
+  .saleInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+  }
+  .saleInfoSection {
+    display: flex;
+    gap: 24px;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .saleDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .saleInfoDetails {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 24px;
+    justify-content: space-between;
+    .saleInfoDetailsItem {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1 0 100%;
+      max-width: 50%;
+      select {
+        padding: 10px 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 6px;
+        background: #f5f6f8;
+        border: none;
+      }
+      span {
+        color: var(--Primary, #1b2443);
+        font-family: Chillax;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 16px; /* 114.286% */
+      }
+    }
+  }
+
+  .saleInfoHeader {
+    display: flex;
+    gap: 24px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    .orderNumberInfo {
+      color: #474d66;
+      font-family: Chillax;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 16px; /* 100% */
+      span {
+        color: var(--Secondary, #1e8ca5);
+      }
+    }
+    .orderStatusInfo {
+      color: #474d66;
+      font-family: Chillax;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 16px; /* 100% */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+    }
+  }
+
+  .modalContent {
+    background: white;
+    padding: 30px;
+    border-radius: 5px;
+    position: relative;
+    width: 95%;
+    height: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .closeButton {
+    position: absolute;
+    top: -5px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 3rem;
+    cursor: pointer;
+  }
+  .modalContent h3 {
+    margin-bottom: 40px;
+  }
+
+  $shine-width: 30px;
+  $circle-size: 20px;
+
+  @keyframes shine {
+    0% {
+      left: -($circle-size / 2 + $shine-width);
+    }
+    100% {
+      left: 3 / 2 * $circle-size;
+    }
+  }
+
+  .status-steps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    position: relative;
+    width: 100%;
+  }
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex: 1;
+  }
+
+  .circle {
+    width: $circle-size;
+    height: $circle-size;
+    border-radius: 50%;
+    background-color: lightgray;
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .circle::before {
+    content: "";
+    transform: skewX(-45deg);
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 0px,
+      rgba(255, 255, 255, 0.2) $shine-width / 5,
+      rgba(255, 255, 255, 0.1) $shine-width
+    );
+    position: absolute;
+    background-repeat: repeat-x;
+    left: -($circle-size / 2 + $shine-width);
+    width: $shine-width;
+    height: 100%;
+    animation: shine 2s infinite;
+  }
+
+  .circle-check {
+    width: $circle-size;
+    height: $circle-size;
+    border-radius: 50%;
+    background-color: var(--Secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .circle-check::before {
+    content: "";
+    transform: skewX(-45deg);
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 0px,
+      rgba(255, 255, 255, 0.2) $shine-width / 5,
+      rgba(255, 255, 255, 0.1) $shine-width
+    );
+    position: absolute;
+    background-repeat: repeat-x;
+    left: -($circle-size / 2 + $shine-width);
+    width: $shine-width;
+    height: 100%;
+    animation: shine 2s infinite;
+  }
+
+  .step.completed .circle,
+  .step.active .circle {
+    background-color: var(--Secondary);
+  }
+
+  .step.inactive .circle,
+  .step.inactive .circle-check {
+    background-color: lightgray;
+  }
+
+  .label {
+    margin-top: 8px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .step::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    width: 100%;
+    right: 50%;
+    height: 10px;
+    z-index: 0;
+    background-color: lightgray;
+  }
+
+  .step::after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    width: 50%;
+    height: 10px;
+    background-color: lightgray;
+    z-index: 1;
+  }
+
+  .step.completed::before,
+  .step.completed::after,
+  .step.active::after {
+    background-color: var(--Secondary) !important;
+  }
+
+  .status-steps .step:first-child::before {
+    display: none;
+  }
+
+  .status-steps .step:last-child::after {
+    display: none;
+  }
+
+  .step.active::before {
+    background-color: var(--Secondary) !important;
+  }
+
+  .step.inactive::before {
+    background-color: lightgray !important;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .step.inactive::before {
+    width: 50%;
+  }
+  .step.completed::before,
+  .step.completed::after,
+  .step.active::after {
+    width: 50%;
+  }
+}

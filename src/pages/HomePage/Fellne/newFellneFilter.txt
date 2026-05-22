@@ -1,0 +1,119 @@
+  const { currentLanguage } = useLanguage();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [filteredData, setFilteredData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(6);
+  const [selectedNgjyra, setSelectedNgjyra] = useState<string[]>([]);
+  const [selectedVetura, setSelectedVetura] = useState<string[]>([]);
+  const [selectedVrimat, setSelectedVrimat] = useState<string[]>([]);
+  const [availableVeturaOptions, setAvailableVeturaOptions] = useState<
+    string[]
+  >([]);
+  const [availableNgjyraOptions, setAvailableNgjyraOptions] = useState<
+    string[]
+  >([]);
+  const [availableVrimatOptions, setAvailableVrimatOptions] = useState<
+    string[]
+  >([]);
+
+  const { data, isLoading, error } = useFetchData(
+    getProData,
+    "Kosovo",
+    "business"
+  );
+
+  const isFellne = (item: any) => item.extra2?.toLowerCase().includes("fellne");
+
+  useEffect(() => {
+    if (data?.GetStoqetperItemIDResult) {
+      const fellneItems = data.GetStoqetperItemIDResult.filter(isFellne);
+
+      // Extract unique brands and colors
+      const uniqueVeturas: any = [
+        ...new Set(fellneItems.map((item: any) => item.Vetura).filter(Boolean)),
+      ];
+      const uniqueNgjyra: any = [
+        ...new Set(
+          fellneItems.map((item: any) => item.Clasification4).filter(Boolean)
+        ),
+      ];
+      const uniqueVrimat: any = [
+        ...new Set(
+          fellneItems.map((item: any) => item.Clasification3).filter(Boolean)
+        ),
+      ];
+
+      setAvailableVeturaOptions(uniqueVeturas);
+      setAvailableNgjyraOptions(uniqueNgjyra);
+      setAvailableVrimatOptions(uniqueVrimat);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (!data?.GetStoqetperItemIDResult) return;
+
+    let fellneItems = data.GetStoqetperItemIDResult.filter(isFellne);
+
+    if (selectedNgjyra.length > 0) {
+      fellneItems = fellneItems.filter((item: any) =>
+        selectedNgjyra.includes(item.Clasification4)
+      );
+    }
+
+    if (selectedVetura.length > 0) {
+      fellneItems = fellneItems.filter((item: any) =>
+        selectedVetura.includes(item.Clasification)
+      );
+    }
+
+    if (selectedVrimat.length > 0) {
+      fellneItems = fellneItems.filter((item: any) =>
+        selectedVrimat.includes(item.Clasification3)
+      );
+    }
+
+    // Update available filters dynamically based on current selection
+    const updatedVeturaOptions: any = [
+      ...new Set(
+        fellneItems.map((item: any) => item.Clasification).filter(Boolean)
+      ),
+    ];
+    const updatedVrimatOptions: any = [
+      ...new Set(
+        fellneItems.map((item: any) => item.Clasification3).filter(Boolean)
+      ),
+    ];
+
+    setAvailableVeturaOptions(updatedVeturaOptions);
+    setAvailableVrimatOptions(updatedVrimatOptions);
+    setFilteredData(fellneItems);
+  }, [selectedNgjyra, selectedVetura, selectedVrimat, data]);
+
+  const handleNgjyraChange = (value: string) => {
+    setSelectedNgjyra((prev) =>
+      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+    );
+    setCurrentPage(1);
+  };
+
+  const handleVeturaChange = (value: string) => {
+    setSelectedVetura((prev) =>
+      prev.includes(value) ? prev.filter((b) => b !== value) : [...prev, value]
+    );
+    setCurrentPage(1);
+  };
+  const handleVrimatChange = (value: string) => {
+    setSelectedVrimat((prev) =>
+      prev.includes(value) ? prev.filter((b) => b !== value) : [...prev, value]
+    );
+    setCurrentPage(1);
+  };
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  if (error) return <p>Error loading products: {error.message}</p>;
