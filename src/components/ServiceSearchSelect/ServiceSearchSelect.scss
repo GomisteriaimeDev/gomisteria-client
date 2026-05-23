@@ -1,0 +1,73 @@
+.service-search-select {
+  position: relative;
+  font-family: "Arial", sans-serif;
+  overflow: visible;
+
+  .search-select-label {
+    display: flex;
+    padding: 10px 14px;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1 0 0;
+    position: relative;
+    border-radius: 6px;
+    background: var(--White, #fff);
+    color: var(--Text-Color, #7b7b7b);
+    font-family: Chillax;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px;
+  }
+
+  .search-select-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    height: 21px;
+    padding: 0px;
+    padding-left: 4px;
+    font-size: 16px;
+    color: #333;
+    font-family: Chillax;
+
+    &::placeholder {
+      color: #333;
+    }
+  }
+
+  .search-select-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 4px 0;
+    z-index: 100;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .search-select-option {
+    padding: 8px 14px;
+    cursor: pointer;
+    font-family: Chillax;
+    font-size: 14px;
+    color: #333;
+    transition: background 0.15s;
+
+    &:hover {
+      background: #f0f4ff;
+    }
+
+    &.selected {
+      background: #e8eeff;
+      font-weight: 500;
+    }
+  }
+}

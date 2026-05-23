@@ -1,0 +1,95 @@
+.reservationProductsWrapper {
+  padding: 60px 100px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 60px;
+  .searchTop {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.reservation-cart-icon {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+  .reservation-cart-icon-wrapper {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    .reservation-shoppingBag {
+      width: 40px;
+      height: 40px;
+    }
+    .reservation-cart-count-indicator {
+      position: absolute;
+      top: -7px;
+      right: -8px;
+      background-color: var(--Red);
+      color: white;
+      border-radius: 100%;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 10px;
+    }
+  }
+}
+
+.searchProducts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 50px;
+}
+.searchProductsListCenter {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 26px;
+  row-gap: 50px;
+  width: 100%;
+  justify-content: center;
+  margin: auto 0;
+}
+
+@media screen and (max-width: 768px) {
+  .reservationProductsWrapper {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 60px;
+    .searchTop {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .searchProducts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 50px;
+  }
+  .searchProductsListCenter {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 26px;
+    row-gap: 50px;
+    width: 100%;
+    justify-content: flex-start;
+    margin: auto 0;
+  }
+}

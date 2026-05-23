@@ -1,0 +1,25 @@
+.reservation-posts {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 45px;
+  position: relative;
+  flex-wrap: wrap;
+  // padding: 130px;
+  width: 100%
+}
+
+@media screen and (max-width: 768px) {
+  .reservation-posts {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    padding: 20px;
+    width: 100%;
+    flex-direction: column;
+  }
+  
+  
+}

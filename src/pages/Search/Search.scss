@@ -1,0 +1,65 @@
+.searchPageWrapper {
+  padding: 60px 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 40px;
+  min-height: 60vh;
+
+  .searchTop {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    h4 {
+      color: #777;
+      font-weight: 400;
+      font-size: 16px;
+    }
+
+    h2 {
+      color: #222;
+      font-size: 28px;
+      font-weight: 600;
+    }
+  }
+}
+
+.searchProducts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.searchProductsList {
+  padding: 0 50px;
+  max-width: 1440px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 30px;
+  row-gap: 50px;
+  justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+  .searchPageWrapper {
+    padding: 40px 20px;
+    gap: 30px;
+
+    .searchTop {
+      h2 {
+        font-size: 22px;
+      }
+    }
+  }
+
+  .searchProductsList {
+    padding: 0;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,33 @@
+.successPageWrapper-services {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  gap: 161px;
+  padding-top: 80px;
+}
+.successPageContent-services {
+  display: flex;
+  max-width: 565px;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  .successPageText-services {
+    text-align: center;
+  }
+}
+
+.successPageButtons-services {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  a {
+    width: 100%;
+  }
+}

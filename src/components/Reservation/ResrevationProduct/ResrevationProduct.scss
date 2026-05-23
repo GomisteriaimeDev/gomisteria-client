@@ -1,0 +1,104 @@
+.reservationProduct-item {
+  width: 315px;
+  height: 384px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  &:hover {
+    .reservationProduct-image {
+      width: 170px;
+      transition: ease-in-out 0.3s;
+    }
+    .reservationProduct-item-content {
+      transition: ease-in-out 0.3s;
+      background: rgba(245, 245, 245, 1);
+    }
+  }
+  .reservationProduct-image {
+    width: 150px;
+    height: auto;
+    flex-shrink: 0;
+    position: relative;
+    top: 0;
+    left: 0;
+    transition: ease-in-out 0.3s;
+  }
+  .reservationProduct-item-content {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 95%;
+    height: 279px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    transition: ease-in-out 0.3s;
+    background: rgba(245, 245, 245, 0.7);
+    backdrop-filter: blur(5px);
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden;
+    .item-content-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      min-width: 0;
+      h5 {
+        width: 100%;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        word-break: break-all;
+      }
+      .item-content-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 4px;
+      }
+      p {
+        span {
+          color: var(--Secondary, #1e8ca5);
+
+          font-family: Chillax;
+          font-size: 15px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 21px;
+        }
+      }
+    }
+  }
+}
+.reservationProduct-modal-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.reservationProduct-box-counter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  span {
+    text-align: center;
+    width: 25px;
+    font-weight: 600;
+  }
+  button {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    background-color: #f5f5f6;
+    color: var(--Secondary);
+    border: none;
+    border-radius: 18px;
+    cursor: pointer;
+  }
+}
