@@ -91,10 +91,13 @@ const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     quantity: number
   ) => {
     try {
-      const { images, ...restProductData } = productData || {};
+      // Drop base64 images entirely. They are huge (a single photo blows past
+      // the backend's ~100kb JSON body limit -> 413 -> silent add failure) and
+      // the backend strips `images` anyway, re-serving them via
+      // /prodata/image/:code/:index. The cart renders images from that endpoint.
       const trimmedProductData = {
-        ...restProductData,
-        images: images?.[0] ? [images[0]] : [],
+        ...(productData || {}),
+        images: [],
       };
       await axiosInstance.post(
         "/cart/items",

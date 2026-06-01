@@ -44,6 +44,17 @@ const CartItem: React.FC<CartItemProps> = ({
 
   const minQuantity = step;
 
+  // Cart items no longer store base64 images; resolve the product image from the
+  // prodata image endpoint by code. Fall back to any inline image (legacy items).
+  const imageSrc = useMemo(() => {
+    const inline = item?.productData?.images?.[0];
+    if (inline) return inline;
+    const code = item?.productData?.code;
+    return code
+      ? `https://gomisteria-api.onrender.com/api/prodata/image/${code}/1`
+      : undefined;
+  }, [item?.productData?.images, item?.productData?.code]);
+
   const handleDecrement = () => {
     const newQuantity = quantity - step;
     if (newQuantity >= minQuantity) {
@@ -97,10 +108,7 @@ const CartItem: React.FC<CartItemProps> = ({
       <div className="cart-box-left">
         <div className="cart-item-image">
           {discount > 0 && <span className="sale">-{discount}%</span>}
-          <img
-            src={item?.productData?.images?.[0]}
-            alt={item?.productData?.description}
-          />
+          <img src={imageSrc} alt={item?.productData?.description} />
         </div>
 
         <div className="cart-box-left-details">
