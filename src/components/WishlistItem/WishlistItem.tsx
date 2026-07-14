@@ -15,10 +15,19 @@ const WishlistItem = ({ item }: any) => {
   };
   const discountedPrice = discount
     ? (
-        item?.productData.price -
+        item?.productData?.price -
         item?.productData?.price * (discount / 100)
       ).toFixed(2)
-    : item?.productData?.price.toFixed(2);
+    : item?.productData?.price?.toFixed(2);
+
+  // Wishlist items no longer store base64 images; resolve the product image from
+  // the prodata image endpoint by code. Fall back to any inline image (legacy items).
+  const inlineImage = item?.productData?.images?.[0];
+  const imageSrc =
+    inlineImage ??
+    (item?.productData?.code
+      ? `https://gomisteria-api.onrender.com/api/prodata/image/${item.productData.code}/1`
+      : undefined);
 
   return (
     <div className="cart-box">
@@ -42,18 +51,15 @@ const WishlistItem = ({ item }: any) => {
       <div className="cart-box-left">
         <div className="cart-item-image">
           {discount > 0 && <span className="sale">-{discount}%</span>}
-          {item?.productData?.images[0] ? (
-            <img
-              src={item?.productData?.images[0]}
-              alt={item.productData.description}
-            />
+          {imageSrc ? (
+            <img src={imageSrc} alt={item?.productData?.description} />
           ) : (
             <p>no image</p>
           )}
         </div>
         <div className="cart-box-left-details">
           <a
-            href={`/${item?.productData?.extra2.toLowerCase()}/${
+            href={`/${item?.productData?.extra2?.toLowerCase()}/${
               item?.productData?.code
             }`}
             className="cart-item-description"
@@ -77,13 +83,13 @@ const WishlistItem = ({ item }: any) => {
                 <span>{item.productData.extra2}</span>
               </p>
             )}
-             {item.productData.warehouses[0] && (
+             {item?.productData?.warehouses?.[0] && (
               <p>
                 {currentLanguage === "en" ? "Warehouse" : "Depo"}:{" "}
                 <span>
-                  {item?.productData?.warehouses[0].quantityAvailable > 20
+                  {item.productData.warehouses[0].quantityAvailable > 20
                     ? "20+"
-                    : `${item?.productData?.warehouses[0].quantityAvailable} në stok`}
+                    : `${item.productData.warehouses[0].quantityAvailable} në stok`}
                 </span>
               </p>
             )}
