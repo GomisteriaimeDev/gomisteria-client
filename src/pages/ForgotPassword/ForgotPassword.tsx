@@ -79,8 +79,12 @@ const ForgotPassword = () => {
               );
               setSubmitted(true);
             } catch (err: any) {
-              // Always show success message for security (don't reveal if email exists)
-              setSubmitted(true);
+              // Backend answers 200 for unknown emails, so any error here is a real failure
+              setGeneralError(
+                currentLanguage === "en"
+                  ? "We couldn't send the reset email. Please try again later."
+                  : "Nuk mundëm të dërgojmë email-in e rivendosjes. Ju lutem provoni më vonë."
+              );
             } finally {
               setSubmitting(false);
             }

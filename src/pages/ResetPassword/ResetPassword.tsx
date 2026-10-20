@@ -134,9 +134,13 @@ const ResetPassword = () => {
             );
             setSuccess(true);
           } catch (err: any) {
-            const message = err?.response?.data?.message;
-            if (typeof message === "string") {
-              setGeneralError(message);
+            const code = err?.response?.data?.code;
+            if (code === "RESET_PASSWORD_TOO_SHORT") {
+              setGeneralError(
+                currentLanguage === "en"
+                  ? "Password must be at least 6 characters"
+                  : "Fjalëkalimi duhet të ketë të paktën 6 karaktere"
+              );
             } else {
               setGeneralError(
                 currentLanguage === "en"
