@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 
@@ -7,7 +7,6 @@ import logo from "../../assets/svg/Logo.svg";
 import FormWrapper from "../../components/Form/Form";
 import FormInput from "../../components/FormInput/FormInput";
 import BlueButton from "../../components/BlueButton/BlueButton";
-import PhoneNumberInput from "../../components/PhoneNumberInput/PhoneNumberInput";
 import codeStyles from "../Verification/Verification.module.scss";
 
 import "./ForgotPassword.scss";
@@ -16,8 +15,7 @@ import { useLanguage } from "../../context/Language";
 const API = "https://gomisteria-api.onrender.com/api/users";
 const RESEND_SECONDS = 60;
 
-type Step = "phone" | "code" | "account" | "password" | "done";
-type Account = { token: string; email: string; name: string };
+type Step = "email" | "code" | "password" | "done";
 
 const ForgotPassword = () => {
   const { currentLanguage, setLanguage } = useLanguage();
@@ -26,10 +24,10 @@ const ForgotPassword = () => {
   };
   const t = (en: string, sq: string) => (currentLanguage === "en" ? en : sq);
 
-  const [step, setStep] = useState<Step>("phone");
-  const [phone, setPhone] = useState("");
+  const [step, setStep] = useState<Step>("email");
+  const [email, setEmail] = useState("");
+  const [maskedPhone, setMaskedPhone] = useState("");
   const [code, setCode] = useState<string[]>(Array(6).fill(""));
-  const [accounts, setAccounts] = useState<Account[]>([]);
   const [token, setToken] = useState<string | null>(null);
   const [generalError, setGeneralError] = useState<string | null>(null);
   const [isBusy, setIsBusy] = useState(false);
@@ -42,32 +40,51 @@ const ForgotPassword = () => {
     return () => clearTimeout(timer);
   }, [resendIn]);
 
-  const sendCode = async (fullPhone: string) => {
+  const sendCode = async (accountEmail: string) => {
     setGeneralError(null);
     setIsBusy(true);
     try {
-      await axios.post(`${API}/request-password-reset-sms`, {
-        phone: fullPhone,
+      const res = await axios.post(`${API}/request-password-reset-sms`, {
+        email: accountEmail,
         portal: "client",
       });
-      setPhone(fullPhone);
+      setEmail(accountEmail);
+      setMaskedPhone(res?.data?.phone ?? "");
       setCode(Array(6).fill(""));
       setResendIn(RESEND_SECONDS);
       setStep("code");
     } catch (err: any) {
       const errorCode = err?.response?.data?.code;
       const status = err?.response?.status;
-      setGeneralError(
-        errorCode === "RESET_SMS_COOLDOWN" || status === 429
-          ? t(
-              "Please wait a minute before requesting a new code.",
-              "Ju lutem prisni një minutë para se të kërkoni një kod të ri."
-            )
-          : t(
-              "We couldn't send the SMS. Please try again later.",
-              "Nuk mundëm të dërgojmë SMS-në. Ju lutem provoni më vonë."
-            )
-      );
+      if (errorCode === "RESET_EMAIL_NOT_FOUND") {
+        setGeneralError(
+          t(
+            "There's no account with this email.",
+            "Nuk ka asnjë llogari me këtë email."
+          )
+        );
+      } else if (errorCode === "RESET_NO_PHONE") {
+        setGeneralError(
+          t(
+            "This account has no phone number. Please call +383 45 522 222.",
+            "Kjo llogari nuk ka numër telefoni. Ju lutem telefononi +383 45 522 222."
+          )
+        );
+      } else if (errorCode === "RESET_SMS_COOLDOWN" || status === 429) {
+        setGeneralError(
+          t(
+            "Please wait a minute before requesting a new code.",
+            "Ju lutem prisni një minutë para se të kërkoni një kod të ri."
+          )
+        );
+      } else {
+        setGeneralError(
+          t(
+            "We couldn't send the SMS. Please try again later.",
+            "Nuk mundëm të dërgojmë SMS-në. Ju lutem provoni më vonë."
+          )
+        );
+      }
     } finally {
       setIsBusy(false);
     }
@@ -110,18 +127,12 @@ const ForgotPassword = () => {
     setIsBusy(true);
     try {
       const res = await axios.post(`${API}/verify-reset-code`, {
-        phone,
+        email,
         portal: "client",
         code: joined,
       });
-      const found: Account[] = res?.data?.accounts ?? [];
-      if (found.length === 1) {
-        setToken(found[0].token);
-        setStep("password");
-      } else {
-        setAccounts(found);
-        setStep("account");
-      }
+      setToken(res?.data?.token ?? null);
+      setStep("password");
     } catch (err) {
       setGeneralError(
         t(
@@ -134,21 +145,16 @@ const ForgotPassword = () => {
     }
   };
 
-  const phoneSchema = Yup.object().shape({
-    phone: Yup.object({
-      phone: Yup.string()
-        .matches(
-          /^[\d\s]+$/,
-          t("Phone number is not valid", "Numri i telefonit nuk është i vlefshëm")
+  const emailSchema = Yup.object().shape({
+    email: Yup.string()
+      .trim()
+      .email(t("Invalid email address", "Email i pavlefshëm"))
+      .required(
+        t(
+          "Please provide a valid email address",
+          "Ju lutem vendosni një email të vlefshëm"
         )
-        .required(
-          t(
-            "Please provide your phone number.",
-            "Ju lutem vendosni numrin tuaj të telefonit."
-          )
-        ),
-      countryCode: Yup.string().required(),
-    }),
+      ),
   });
 
   const passwordSchema = Yup.object().shape({
@@ -191,53 +197,38 @@ const ForgotPassword = () => {
       </button>
       <img src={logo} alt="gomisteriaLogo" className="intro-logo" />
 
-      {step === "phone" && (
+      {step === "email" && (
         <Formik
-          initialValues={{ phone: { phone: "", countryCode: "+383" } }}
-          validationSchema={phoneSchema}
-          onSubmit={(values) =>
-            sendCode(`${values.phone.countryCode}${values.phone.phone}`)
-          }
+          initialValues={{ email }}
+          validationSchema={emailSchema}
+          onSubmit={(values) => sendCode(values.email.trim())}
         >
-          {({ errors, touched }) => (
-            <FormWrapper
-              title={t("Forgot Password", "Keni Harruar Fjalëkalimin")}
-            >
-              <Form className="forgotPassword-form">
-                <p className="forgotPassword-description">
-                  {t(
-                    "Enter the phone number of your account and we'll send you a code by SMS.",
-                    "Vendosni numrin e telefonit të llogarisë suaj dhe ne do t'ju dërgojmë një kod me SMS."
-                  )}
-                </p>
-                <div className="forgotPassword-inputs">
-                  <Field name="phone">
-                    {({ field, form }: any) => (
-                      <PhoneNumberInput
-                        value={field.value}
-                        onChange={(value: any) =>
-                          form.setFieldValue("phone", value)
-                        }
-                        error={(errors.phone as any)?.phone}
-                        touched={(touched.phone as any)?.phone}
-                      />
-                    )}
-                  </Field>
-                </div>
-
-                {generalError && (
-                  <div className="error-message--global">{generalError}</div>
+          <FormWrapper
+            title={t("Forgot Password", "Keni Harruar Fjalëkalimin")}
+          >
+            <Form className="forgotPassword-form">
+              <p className="forgotPassword-description">
+                {t(
+                  "Enter your account email and we'll send a code by SMS to the phone number on your account.",
+                  "Vendosni email-in e llogarisë suaj dhe ne do t'ju dërgojmë një kod me SMS në numrin e telefonit të llogarisë."
                 )}
+              </p>
+              <div className="forgotPassword-inputs">
+                <FormInput name="email" placeholder="Email" type="email" />
+              </div>
 
-                <BlueButton type="submit" disabled={isBusy}>
-                  {isBusy
-                    ? t("Sending...", "Duke dërguar...")
-                    : t("Send Code", "Dërgo Kodin")}
-                </BlueButton>
-                {backToLogin}
-              </Form>
-            </FormWrapper>
-          )}
+              {generalError && (
+                <div className="error-message--global">{generalError}</div>
+              )}
+
+              <BlueButton type="submit" disabled={isBusy}>
+                {isBusy
+                  ? t("Sending...", "Duke dërguar...")
+                  : t("Send Code", "Dërgo Kodin")}
+              </BlueButton>
+              {backToLogin}
+            </Form>
+          </FormWrapper>
         </Formik>
       )}
 
@@ -246,10 +237,10 @@ const ForgotPassword = () => {
           <div className="forgotPassword-form">
             <p className="forgotPassword-description">
               {t(
-                "If this number belongs to an account, we sent a 6-digit code to",
-                "Nëse ky numër i përket një llogarie, ne dërguam një kod me 6 shifra në"
+                "We sent a 6-digit code by SMS to",
+                "Ne dërguam një kod me 6 shifra me SMS në"
               )}{" "}
-              <strong>{phone}</strong>
+              <strong>{maskedPhone}</strong>
             </p>
             <div className={codeStyles.codeInputGroup}>
               {code.map((digit, i) => (
@@ -288,51 +279,22 @@ const ForgotPassword = () => {
                 href="#resend"
                 onClick={(e) => {
                   e.preventDefault();
-                  if (!isBusy) sendCode(phone);
+                  if (!isBusy) sendCode(email);
                 }}
               >
                 {t("Resend code", "Ridërgo kodin")}
               </a>
             )}
             <a
-              href="#change-number"
+              href="#change-email"
               onClick={(e) => {
                 e.preventDefault();
                 setGeneralError(null);
-                setStep("phone");
+                setStep("email");
               }}
             >
-              {t("Change number", "Ndrysho numrin")}
+              {t("Use a different email", "Përdor një email tjetër")}
             </a>
-          </div>
-        </FormWrapper>
-      )}
-
-      {step === "account" && (
-        <FormWrapper title={t("Choose Account", "Zgjidhni Llogarinë")}>
-          <div className="forgotPassword-form">
-            <p className="forgotPassword-description">
-              {t(
-                "This number is used by more than one account. Which one do you want to reset?",
-                "Ky numër përdoret nga më shumë se një llogari. Cilën dëshironi të rivendosni?"
-              )}
-            </p>
-            <div className="forgotPassword-inputs">
-              {accounts.map((account) => (
-                <BlueButton
-                  key={account.token}
-                  type="button"
-                  onClick={() => {
-                    setToken(account.token);
-                    setStep("password");
-                  }}
-                >
-                  {account.name ? `${account.name} · ` : ""}
-                  {account.email}
-                </BlueButton>
-              ))}
-            </div>
-            {backToLogin}
           </div>
         </FormWrapper>
       )}
